@@ -3,10 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Fitness Site</title>
+    <title>Futuristic Fitness</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #000; /* Dark background for a futuristic feel */
+            color: #fff; /* White text color */
+        }
+        header {
+            background: linear-gradient(90deg, #00c6ff, #0072ff); /* Gradient background */
+            padding: 20px;
+            text-align: center;
+        }
+        .content {
+            padding: 20px;
+        }
+        h1, h2 {
+            font-weight: lighter;
+        }
+        .intro {
+            background-color: #111; /* Slightly lighter dark background for the intro section */
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        .features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 3 columns for features */
+            gap: 20px;
+        }
+        .feature-item {
+            background-color: #222; /* Feature item background */
+            padding: 20px;
+            border-radius: 5px;
+            transition: transform 0.3s ease;
+        }
+        .feature-item:hover {
+            transform: translateY(-10px); /* Futuristic hover effect */
+        }
+        @media (max-width: 768px) {
+            .features {
+                grid-template-columns: 1fr; /* Stack features on smaller screens */
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>Welcome to My Fitness Site</h1>
-    <p>This is a great starting point for your fitness journey.</p>
+
+<header>
+    <h1>Futuristic Fitness</h1>
+</header>
+
+<div class="content">
+    <section class="intro">
+        <h2>Welcome to the Future of Fitness</h2>
+        <p>Explore the latest in fitness technology, trends, and training programs designed to elevate your workout experience.</p>
+    </section>
+
+    <section class="features">
+        <div class="feature-item">
+            <h3>Virtual Reality Workouts</h3>
+            <p>Immerse yourself in a virtual environment that motivates and challenges you beyond traditional workouts.</p>
+        </div>
+        <div class="feature-item">
+            <h3>AI Personal Trainers</h3>
+            <p>Get personalized training programs and real-time feedback from your AI-powered fitness coach.</p>
+        </div>
+        <div class="feature-item">
+            <h3>Wearable Fitness Tech</h3>
+            <p>Monitor your progress and health metrics with the latest in wearable fitness technology.</p>
+        </div>
+    </section>
+</div>
+
 </body>
 </html>
