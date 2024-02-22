@@ -1,51 +1,50 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="cs">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Futuristic Fitness</title>
+    <title>Zdravý Životní Styl</title>
     <style>
         body {
             margin: 0;
             padding: 0;
             font-family: 'Arial', sans-serif;
-            background-color: #000; /* Dark background for a futuristic feel */
-            color: #fff; /* White text color */
+            background-color: #f0f0f0;
+            color: #333;
         }
         header {
-            background: linear-gradient(90deg, #00c6ff, #0072ff); /* Gradient background */
+            background-color: #0072ff;
+            color: #fff;
             padding: 20px;
             text-align: center;
         }
         .content {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
             padding: 20px;
         }
-        h1, h2 {
-            font-weight: lighter;
-        }
-        .intro {
-            background-color: #111; /* Slightly lighter dark background for the intro section */
+        .box {
+            width: calc(50% - 40px);
+            margin: 10px;
             padding: 20px;
-            margin-bottom: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
             border-radius: 5px;
-        }
-        .features {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr); /* 3 columns for features */
-            gap: 20px;
-        }
-        .feature-item {
-            background-color: #222; /* Feature item background */
-            padding: 20px;
-            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            text-align: center;
             transition: transform 0.3s ease;
         }
-        .feature-item:hover {
-            transform: translateY(-10px); /* Futuristic hover effect */
+        .box:hover {
+            transform: scale(1.05);
         }
-        @media (max-width: 768px) {
-            .features {
-                grid-template-columns: 1fr; /* Stack features on smaller screens */
+        a {
+            text-decoration: none;
+            color: #0072ff;
+        }
+        @media (max-width: 600px) {
+            .box {
+                width: calc(100% - 40px);
             }
         }
     </style>
@@ -53,29 +52,22 @@
 <body>
 
 <header>
-    <h1>Futuristic Fitness</h1>
+    <h1>Zdravý Životní Styl</h1>
 </header>
 
 <div class="content">
-    <section class="intro">
-        <h2>Welcome to the Future of Fitness</h2>
-        <p>Explore the latest in fitness technology, trends, and training programs designed to elevate your workout experience.</p>
-    </section>
-
-    <section class="features">
-        <div class="feature-item">
-            <h3>Virtual Reality Workouts</h3>
-            <p>Immerse yourself in a virtual environment that motivates and challenges you beyond traditional workouts.</p>
-        </div>
-        <div class="feature-item">
-            <h3>AI Personal Trainers</h3>
-            <p>Get personalized training programs and real-time feedback from your AI-powered fitness coach.</p>
-        </div>
-        <div class="feature-item">
-            <h3>Wearable Fitness Tech</h3>
-            <p>Monitor your progress and health metrics with the latest in wearable fitness technology.</p>
-        </div>
-    </section>
+    <div class="box">
+        <a href="kardio.html">Kardio</a>
+    </div>
+    <div class="box">
+        <a href="posilovani.html">Posilování</a>
+    </div>
+    <div class="box">
+        <a href="doplnky.html">Výživové Doplňky</a>
+    </div>
+    <div class="box">
+        <a href="spanek.html">Spánek</a>
+    </div>
 </div>
 
 </body>
