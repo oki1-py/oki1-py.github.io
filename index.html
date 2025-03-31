@@ -1,22 +1,559 @@
----
-layout: default
----
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitPower - Průvodce posilováním</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 100;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo span {
+            color: var(--accent-color);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 2rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--light-color);
+        }
+        
+        .hero {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('/api/placeholder/1200/600');
+            background-size: cover;
+            background-position: center;
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding: 0 1rem;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin-bottom: 2rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 0.8rem 1.8rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #c0392b;
+        }
+        
+        .section {
+            padding: 5rem 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--secondary-color);
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 50%;
+            height: 3px;
+            background-color: var(--accent-color);
+            bottom: 0;
+            left: 25%;
+        }
+        
+        .workout-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .workout-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .workout-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 20px rgba(0,0,0,0.2);
+        }
+        
+        .workout-img {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .workout-content {
+            padding: 1.5rem;
+        }
+        
+        .workout-content h3 {
+            margin-bottom: 0.8rem;
+            color: var(--secondary-color);
+        }
+        
+        .schedule {
+            margin-top: 3rem;
+        }
+        
+        .schedule-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1.5rem;
+            background-color: white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .schedule-table th, .schedule-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .schedule-table th {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .schedule-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .schedule-table tr:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .tips-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .tip-card {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .tip-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background-color: var(--primary-color);
+        }
+        
+        .tip-card h3 {
+            margin-bottom: 1rem;
+            color: var(--secondary-color);
+        }
+        
+        .contact {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 5rem 1rem;
+        }
+        
+        .contact-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .contact-info h2 {
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+        }
+        
+        .contact-info p {
+            margin-bottom: 1rem;
+        }
+        
+        .contact-form input, .contact-form textarea {
+            width: 100%;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border: none;
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+        
+        .contact-form input::placeholder, .contact-form textarea::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            text-align: center;
+            padding: 2rem 1rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .social-icons {
+            margin-top: 1rem;
+        }
+        
+        .social-icons a {
+            color: white;
+            margin: 0 10px;
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+        
+        .social-icons a:hover {
+            color: var(--primary-color);
+        }
+        
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--accent-color);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            font-size: 1.5rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+        
+        .back-to-top.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .section {
+                padding: 3rem 1rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+                font-size: 1.5rem;
+                color: white;
+                cursor: pointer;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hlavička -->
+    <header>
+        <nav>
+            <div class="logo">Fit<span>Power</span></div>
+            <ul class="nav-links">
+                <li><a href="#home">Domů</a></li>
+                <li><a href="#cviky">Cviky</a></li>
+                <li><a href="#rozvrh">Rozvrh</a></li>
+                <li><a href="#tipy">Tipy</a></li>
+                <li><a href="#kontakt">Kontakt</a></li>
+            </ul>
+        </nav>
+    </header>
 
-<header>
-    <h1>Zdravý životní styl</h1>
-</header>
+    <!-- Úvodní sekce -->
+    <section class="hero" id="home">
+        <h1>Objevte sílu svého těla</h1>
+        <p>Začněte svou cestu k silnějšímu a zdravějšímu tělu. Naše komplexní průvodce posilováním vám pomůže dosáhnout vašich fitness cílů.</p>
+        <a href="#cviky" class="btn">Začít posilovat</a>
+    </section>
 
-<div class="content">
-    <div class="box">
-        <a href="spanek.html">Spánek</a>
-    </div>
-    <div class="box">
-        <a href="posilovani.html">Posilování</a>
-    </div>
-    <div class="box">
-        <a href="kardio.html">Kardio</a>
-    </div>
-    <div class="box">
-        <a href="doplnky.html">Výživové doplňky</a>
-    </div>
-</div>
+    <!-- Sekce cviků -->
+    <section class="section" id="cviky">
+        <div class="section-title">
+            <h2>Druhy posilování</h2>
+            <p>Objevte různé typy tréninků, které vám pomohou dosáhnout vašich cílů</p>
+        </div>
+        <div class="workout-types">
+            <div class="workout-card">
+                <div class="workout-img" style="background-image: url('/api/placeholder/400/250');"></div>
+                <div class="workout-content">
+                    <h3>Silový trénink</h3>
+                    <p>Zaměřuje se na budování svalové hmoty a síly pomocí těžkých vah a nízkého počtu opakování. Ideální pro zvyšování celkové síly těla.</p>
+                </div>
+            </div>
+            <div class="workout-card">
+                <div class="workout-img" style="background-image: url('/api/placeholder/400/250');"></div>
+                <div class="workout-content">
+                    <h3>Hypertrofický trénink</h3>
+                    <p>Optimalizovaný pro růst svalů pomocí středních vah a vyššího počtu opakování. Perfektní pro ty, kteří chtějí zlepšit svůj fyzický vzhled.</p>
+                </div>
+            </div>
+            <div class="workout-card">
+                <div class="workout-img" style="background-image: url('/api/placeholder/400/250');"></div>
+                <div class="workout-content">
+                    <h3>Funkční trénink</h3>
+                    <p>Kombinuje pohyby z každodenního života pro zlepšení celkové kondice a prevenci zranění. Skvělý pro všestranný rozvoj.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sekce rozvrhu -->
+    <section class="section" id="rozvrh">
+        <div class="section-title">
+            <h2>Týdenní rozvrh</h2>
+            <p>Následujte tento rozvrh pro optimální výsledky</p>
+        </div>
+        <div class="schedule">
+            <p>Pro začátečníky doporučujeme trénovat 3-4krát týdně s dostatečným odpočinkem mezi tréninky stejných svalových skupin.</p>
+            <table class="schedule-table">
+                <thead>
+                    <tr>
+                        <th>Den</th>
+                        <th>Svalové skupiny</th>
+                        <th>Intenzita</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Pondělí</td>
+                        <td>Prsa, Triceps</td>
+                        <td>Střední-Vysoká</td>
+                    </tr>
+                    <tr>
+                        <td>Úterý</td>
+                        <td>Záda, Biceps</td>
+                        <td>Střední-Vysoká</td>
+                    </tr>
+                    <tr>
+                        <td>Středa</td>
+                        <td>Odpočinek nebo Kardio</td>
+                        <td>Nízká</td>
+                    </tr>
+                    <tr>
+                        <td>Čtvrtek</td>
+                        <td>Nohy, Ramena</td>
+                        <td>Vysoká</td>
+                    </tr>
+                    <tr>
+                        <td>Pátek</td>
+                        <td>Celé tělo nebo Slabé partie</td>
+                        <td>Střední</td>
+                    </tr>
+                    <tr>
+                        <td>Sobota/Neděle</td>
+                        <td>Odpočinek a regenerace</td>
+                        <td>-</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Sekce tipů -->
+    <section class="section" id="tipy">
+        <div class="section-title">
+            <h2>Tipy pro efektivní posilování</h2>
+            <p>Maximalizujte své výsledky pomocí těchto osvědčených rad</p>
+        </div>
+        <div class="tips-container">
+            <div class="tip-card">
+                <h3>Správná technika</h3>
+                <p>Vždy upřednostňujte správnou techniku před hmotností závaží. Nesprávné provedení cviků může vést k zranění a omezit vaše výsledky.</p>
+            </div>
+            <div class="tip-card">
+                <h3>Progresivní přetížení</h3>
+                <p>Postupně zvyšujte váhu, počet opakování nebo náročnost cvičení. Vaše tělo se adaptuje, a proto potřebuje nové výzvy pro další růst.</p>
+            </div>
+            <div class="tip-card">
+                <h3>Výživa</h3>
+                <p>Zajistěte si dostatečný příjem bílkovin (1,6-2g na kg tělesné hmotnosti) a kvalitních sacharidů pro optimální růst svalů a regeneraci.</p>
+            </div>
+            <div class="tip-card">
+                <h3>Odpočinek</h3>
+                <p>Dopřejte svým svalům dostatek času na regeneraci. Právě během odpočinku dochází k růstu svalové hmoty, nikoliv během tréninku.</p>
+            </div>
+            <div class="tip-card">
+                <h3>Konzistence</h3>
+                <p>Pravidelnost je klíčem k úspěchu. Raději cvičte méně, ale pravidelně, než jednorázově s vysokou intenzitou a pak dlouho vynechávat.</p>
+            </div>
+            <div class="tip-card">
+                <h3>Sledování pokroku</h3>
+                <p>Zapisujte si váhy, počty opakování a jak se cítíte. Pomůže vám to sledovat váš pokrok a upravit trénink podle potřeby.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Kontaktní sekce -->
+    <section class="contact" id="kontakt">
+        <div class="contact-container">
+            <div class="contact-info">
+                <h2>Zůstaňme v kontaktu</h2>
+                <p>Máte otázky nebo potřebujete poradit s vaším tréninkovým plánem? Neváhejte nás kontaktovat!</p>
+                <p>Email: info@fitpower.cz</p>
+                <p>Telefon: +420 123 456 789</p>
+            </div>
+            <div class="contact-form">
+                <input type="text" placeholder="Jméno">
+                <input type="email" placeholder="Email">
+                <textarea rows="4" placeholder="Zpráva"></textarea>
+                <button class="btn">Odeslat</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Patička -->
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 FitPower - Průvodce posilováním. Všechna práva vyhrazena.</p>
+            <div class="social-icons">
+                <a href="#">FB</a>
+                <a href="#">IG</a>
+                <a href="#">YT</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Tlačítko zpět nahoru -->
+    <a href="#" class="back-to-top">↑</a>
+
+    <script>
+        // Tlačítko zpět nahoru
+        const backToTopButton = document.querySelector('.back-to-top');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTopButton.classList.add('active');
+            } else {
+                backToTopButton.classList.remove('active');
+            }
+        });
+        
+        // Plynulé scrollování pro navigační odkazy
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
